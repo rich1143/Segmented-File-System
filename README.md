@@ -17,7 +17,7 @@ This starter code comes with some simple Aruba/Cucumber tests, but as discussed 
 
 They're using socket-based connections between the client and server, but someone who is long since fired decided that it was important that the server break the files up into 1K chunks and send each chunk separately using UDP. Because of various sources of asynchrony such as threads on the server and network delays, you can't be sure you'll receive the chunks in the right order, so you'll need to collect and re-assemble them before writing out the file.
 
-Unlike the socket connections we used for the Echo Server earlier, this system uses UDP or Datagram sockets. "Regular" sockets (also known as stream sockets or TCP sockets) provide you with a stable two-way connection that remains active until you disconnect. Datagram sockets are less structured, and you essentially just send out packets of information which can arrive at their destination in an arbitrary order, much like the description of packets in Chapter 7 of [Saltzer and Kaashoek](http://ocw.mit.edu/resources/res-6-004-principles-of-computer-system-design-an-introduction-spring-2009/) or [This online pdf](http://www.ee.columbia.edu/~bbathula/courses/HPCN/chap03_part-1.pdf). On the listening end, instead of reading a stream of data, data arrives in packets, and it's your job to interpret their contents. Typically there is some sort of protocol that describes how packets are formed and interpreted; otherwise we end up with an impossible guessing game.
+Unlike the socket connections we used for the Echo Server earlier, this system uses UDP or Datagram sockets. "Regular" sockets (also known as stream sockets or TCP sockets) provide you with a stable two-way connection that remains active until you disconnect. Datagram sockets are less structured, and you essentially just send out packets of information which can arrive at their destination in an arbitrary order, much like the description of packets in Chapter 7 of [Saltzer and Kaashoek](http://ocw.mit.edu/resources/res-6-004-principles-of-computer-system-design-an-introduction-spring-2009/) ([PDF of that chapter](https://ocw.mit.edu/resources/res-6-004-principles-of-computer-system-design-an-introduction-spring-2009/online-textbook/networks_open_5_0.pdf)) or [this online pdf](http://www.ee.columbia.edu/~bbathula/courses/HPCN/chap03_part-1.pdf). On the listening end, instead of reading a stream of data, data arrives in packets, and it's your job to interpret their contents. Typically there is some sort of protocol that describes how packets are formed and interpreted; otherwise we end up with an impossible guessing game.
 
 Java provides direct support for UPD/datagram sockets primarily through the `DatagramSocket` and `DatagramPacket` classes. See the tutorial [Writing a Datagram Client and Server](http://docs.oracle.com/javase/tutorial/networking/datagrams/clientServer.html) for more; what you care about is down in the "The QuoteClient class" section.
 
@@ -152,8 +152,8 @@ Feature: Getting files from a server and putting them together
     When we run our implementation of the segmented file client                                # features/step_definitions/segmented_file_client_steps.rb:17
       $ cd .../Segmented-file-system-client-solution/aruba-test/tmp/aruba
       $ etc/run_segmented_file_client.sh
-      
-      
+
+
     Then the file "small.txt" exists                                                           # features/step_definitions/segmented_file_client_steps.rb:23
       expected `File.file?(".../Segmented-file-system-client-solution/aruba-test/tmp/aruba/small.txt")` to return true, got false (RSpec::Expectations::ExpectationNotMetError)
       ./features/step_definitions/segmented_file_client_steps.rb:24:in `/^the file "([^"]*)" exists$/'
